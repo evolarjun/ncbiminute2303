@@ -21,7 +21,7 @@ WHERE biosample_acc = 'SAMN11101132'
 ```sql
 SELECT element_symbol, element_name, subclass
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE biosample_acc = 'SAMN30626382'
+WHERE biosample_acc = 'SAMN11101132'
 ```
 
 ### Look at some of the complex fields
