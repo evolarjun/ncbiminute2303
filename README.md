@@ -5,9 +5,9 @@ Resources for NCBI Minute
 
 ### Count the enoki isolates we just looked at
 ```sql
-select count(*)
-from `ncbi-pathogen-detect.pdbrowser.isolates`
-where isolation_source like '%enoki%'
+SELECT COUNT(*)
+FROM `ncbi-pathogen-detect.pdbrowser.isolates`
+WHERE isolation_source like '%enoki%'
 ```
 
 ### Get info about a given isolate
@@ -26,7 +26,7 @@ WHERE biosample_acc = 'SAMN11101132'
 
 ### Look at some of the complex fields
 ```sql
-SELECT biosample_acc, asm_acc, target_acc, mindiff, AMR_genotypes,
+SELECT biosample_acc, asm_acc, target_acc, AMR_genotypes,
     stress_genotypes, virulence_genotypes, computed_types
 FROM `ncbi-pathogen-detect.pdbrowser.isolates`
 WHERE biosample_acc = 'SAMN08848639'
