@@ -5,9 +5,9 @@ Resources for NCBI Minute
 
 ### Count the enoki isolates we just looked at
 ```sql
-SELECT COUNT(*)
-FROM `ncbi-pathogen-detect.pdbrowser.isolates`
-WHERE isolation_source like '%enoki%'
+select count(*)
+from `ncbi-pathogen-detect.pdbrowser.isolates`
+where isolation_source like '%enoki%'
 ```
 
 ### Get info about a given isolate
@@ -23,15 +23,6 @@ SELECT element_symbol, element_name, subclass
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
 WHERE biosample_acc = 'SAMN11101132'
 ```
-
-### Look at some of the complex fields
-```sql
-SELECT biosample_acc, asm_acc, target_acc, AMR_genotypes,
-    stress_genotypes, virulence_genotypes, computed_types
-FROM `ncbi-pathogen-detect.pdbrowser.isolates`
-WHERE biosample_acc = 'SAMN08848639'
-```
-Notice we found some fields that have multiple values. We'll get to how to query those fields a little later, that's a complex part of BigQuery sql that you may not have encountered before even if you're familiar with SQL
 
 ### Find the most common SNP clusters with Salmonella Newport isolates
 This requires you to count stuff so I'll show you how to use the count() function, GROUP BY, and ORDER BY clauses
