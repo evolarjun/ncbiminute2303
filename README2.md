@@ -14,14 +14,14 @@ WHERE isolation_source LIKE '%enoki%'
 ```sql
 SELECT taxgroup_name, isolate_identifiers, serovar, serotype, erd_group, computed_types
 FROM `ncbi-pathogen-detect.pdbrowser.isolates`
-WHERE biosample_acc = 'SAMN11101132'
+WHERE biosample_acc = 'SAMN21357979'
 ```
 
 ### Find the AMRFinderPlus results for an isolate
 ```sql
 SELECT element_symbol, element_name, subclass
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE biosample_acc = 'SAMN11101132'
+WHERE biosample_acc = 'SAMN21357979'
 ```
 
 ### Find the most common SNP clusters with Salmonella Newport isolates
@@ -76,12 +76,12 @@ ORDER BY
 ```sql
 SELECT element_symbol, element_name, subclass, contig_acc
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE biosample_acc = 'SAMN11101132'
+WHERE biosample_acc = 'SAMN21357979'
 ORDER BY contig_acc, start_on_contig
 ```
 
 ```sql
 SELECT DISTINCT contig_url
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE contig_acc = "AADRRE010000024.1"
+WHERE contig_acc = "ABCIOB010000002.1"
 ```
