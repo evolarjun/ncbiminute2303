@@ -48,33 +48,22 @@ WHERE
 ) >= 1
 ```
 
-### Genes are on contigs that sometimes contain other genes. Lets say you want to find out if two genes are likely linked
+### What are the most common AMR genes in _Salmonella_ Newport isolates
 ```sql
-SELECT
-    mb.contig_acc,
-    mb.element_symbol,
-    mb.scientific_name
-FROM
-    `ncbi-pathogen-detect.pdbrowser.microbigge` mb
-    JOIN (
-        SELECT DISTINCT
-            mb1.contig_acc
-        FROM
-            `ncbi-pathogen-detect.pdbrowser.microbigge` mb1
-            JOIN `ncbi-pathogen-detect.pdbrowser.microbigge` mb2
-                ON mb1.element_symbol = 'blaTEM-1'
-                    AND mb1.contig_acc = mb2.contig_acc
-                    AND mb2.element_symbol = 'blaKPC-2') contigs
-    ON contigs.contig_acc = mb.contig_acc
-ORDER BY
-    mb.contig_acc,
-    mb.start_on_contig
+SELECT mb.element_symbol, mb.subclass, mb.scope, COUNT(DISTINCT(i.target_acc)) num_isolates
+FROM `ncbi-pathogen-detect.pdbrowser.isolates` i
+    JOIN `ncbi-pathogen-detect.pdbrowser.microbigge` mb
+    ON i.target_acc = mb.target_acc
+WHERE i.computed_types.serotype = 'Newport'
+AND mb.subtype = 'AMR'
+GROUP BY mb.element_symbol, mb.subclass, mb.scope
+ORDER BY num_isolates DESC
 ```
 
 ### Get contig sequence for an element
 ### Find the AMRFinderPlus results for an isolate
 ```sql
-SELECT element_symbol, element_name, subclass, contig_acc, contig_url
+SELECT element_symbol, element_name, subclass, contig_acc, isolation_source, contig_url
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
 WHERE biosample_acc = 'SAMN21357979'
 ORDER BY contig_acc, start_on_contig
