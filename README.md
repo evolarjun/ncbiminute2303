@@ -5,23 +5,23 @@ Resources for NCBI Minute
 
 ### Count the enoki isolates we just looked at
 ```sql
-select count(*)
-from `ncbi-pathogen-detect.pdbrowser.isolates`
-where isolation_source like '%enoki%'
+SELECT count(*)
+FROM `ncbi-pathogen-detect.pdbrowser.isolates`
+WHERE isolation_source LIKE '%enoki%'
 ```
 
 ### Get info about a given isolate
 ```sql
 SELECT taxgroup_name, isolate_identifiers, serovar, serotype, erd_group, computed_types
 FROM `ncbi-pathogen-detect.pdbrowser.isolates`
-WHERE biosample_acc = 'SAMN11101132'
+WHERE biosample_acc = 'SAMN21357979'
 ```
 
 ### Find the AMRFinderPlus results for an isolate
 ```sql
 SELECT element_symbol, element_name, subclass
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE biosample_acc = 'SAMN11101132'
+WHERE biosample_acc = 'SAMN21357979'
 ```
 
 ### Find the most common SNP clusters with Salmonella Newport isolates
@@ -48,18 +48,6 @@ WHERE
 ) >= 1
 ```
 
-### Find the five most common AMR genes associated with quinolone resistance
-So far this has all been from the Isolates Browser, lets see some of the things you can do with the MicroBIGG-E data
-```sql
-SELECT element_symbol, subclass, count(*) num_found
-FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE subclass like '%QUINOLONE%'
-AND   subtype = 'AMR'
-GROUP BY element_symbol, subclass
-ORDER BY num_found DESC
-LIMIT 5
-```
-
 ### Genes are on contigs that sometimes contain other genes. Lets say you want to find out if two genes are likely linked
 ```sql
 SELECT
@@ -83,39 +71,17 @@ ORDER BY
     mb.start_on_contig
 ```
 
-
-### Now lets see how many are carbapenem resistant, but don't have either of the "common" carbapenemase genes blaKPC or blaNDM
+### Get contig sequence for an element
+### Find the AMRFinderPlus results for an isolate
 ```sql
-SELECT target_acc
-FROM `ncbi-pathogen-detect.pdbrowser.isolates` isolates
-WHERE
-(SELECT COUNT(1)
-  FROM UNNEST(isolates.AST_phenotypes)
-  WHERE antibiotic LIKE '%penem' AND phenotype = 'resistant'
-) >= 1
-AND
-(SELECT COUNT(1)
-  FROM UNNEST(isolates.AMR_genotypes)
-  WHERE element LIKE 'blaKPC%' OR element LIKE 'blaNDM%'
-) = 0
+SELECT element_symbol, element_name, subclass, contig_acc
+FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
+WHERE biosample_acc = 'SAMN21357979'
+ORDER BY contig_acc, start_on_contig
 ```
 
-
-That's only two carbapenemases, what if we just look for isolates without any known carbapenmase genes or carbapenem resistance point mutations
-### Find isolates that are carbapenem resistant, but don't have a known carbapenem resistance gene or allele
 ```sql
-SELECT isolates.target_acc,
-  ARRAY(select AS STRUCT antibiotic, phenotype from UNNEST(AST_phenotypes) WHERE  antibiotic LIKE "%penem") AST
-FROM `ncbi-pathogen-detect.pdbrowser.isolates` isolates
-LEFT JOIN `ncbi-pathogen-detect.pdbrowser.microbigge` microbigge
-  ON isolates.target_acc = microbigge.target_acc
-  AND microbigge.subclass = 'CARBAPENEM' -- Only carbapenem genes / point mutations
-WHERE
-  (SELECT count(1) FROM unnest(AST_phenotypes) AS ast
-    WHERE antibiotic like "%penem" AND phenotype = 'resistant') >= 1
-  AND isolates.amrfinderplus_version IS NOT NULL -- AMRFinderPlus was run on this target
-  AND isolates.asm_acc IS NOT NULL -- AMRFinderPlus results should be in MicroBIGG-E because assembly is public
-  AND microbigge.subclass IS NULL -- There are no rows in MicroBIGG-E with subclass = CARBAPENEM
-ORDER BY isolates.target_acc
+SELECT DISTINCT contig_url
+FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
+WHERE contig_acc = "ABCIOB010000002.1"
 ```
-
