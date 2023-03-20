@@ -1,9 +1,13 @@
-# ncbiminute2303
+
+ncbiminute2303
+=================
+
 Resources for NCBI Minute
 
-# Example queries used in talk
+Example queries used in talk
+=============================
 
-### Count the enoki isolates we just looked at
+### Count the isolates from enoki mushrooms
 ```sql
 SELECT count(*)
 FROM `ncbi-pathogen-detect.pdbrowser.isolates`
@@ -60,7 +64,9 @@ GROUP BY mb.element_symbol, mb.subclass, mb.scope
 ORDER BY num_isolates DESC
 ```
 
-### Get contig sequence for an element
+Get contig sequence for an element
+----------------------------------
+
 ### Find the AMRFinderPlus results for an isolate
 ```sql
 SELECT element_symbol, element_name, subclass, contig_acc, isolation_source, contig_url
