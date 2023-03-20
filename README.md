@@ -74,14 +74,8 @@ ORDER BY
 ### Get contig sequence for an element
 ### Find the AMRFinderPlus results for an isolate
 ```sql
-SELECT element_symbol, element_name, subclass, contig_acc
+SELECT element_symbol, element_name, subclass, contig_acc, contig_url
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
 WHERE biosample_acc = 'SAMN21357979'
 ORDER BY contig_acc, start_on_contig
-```
-
-```sql
-SELECT DISTINCT contig_url
-FROM `ncbi-pathogen-detect.pdbrowser.microbigge`
-WHERE contig_acc = "ABCIOB010000002.1"
 ```
