@@ -5,9 +5,9 @@ Resources for NCBI Minute
 
 ### Count the enoki isolates we just looked at
 ```sql
-select count(*)
-from `ncbi-pathogen-detect.pdbrowser.isolates`
-where isolation_source like '%enoki%'
+SELECT count(*)
+FROM `ncbi-pathogen-detect.pdbrowser.isolates`
+WHERE isolation_source LIKE '%enoki%'
 ```
 
 ### Get info about a given isolate
