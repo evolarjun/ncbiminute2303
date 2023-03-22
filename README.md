@@ -41,9 +41,9 @@ Looks like there were maybe some errors
 SELECT mb.contig_acc, mb.element_symbol, mb.element_name, mb.subclass, top.num_unique_genes, top.num_genes
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge` mb
 JOIN (
-    SELECT contig_acc, count(*) num_genes, count(distinct(element_symbol)) num_unique_genes 
+    SELECT contig_acc, COUNT(*) num_genes, COUNT(DISTINCT(element_symbol)) num_unique_genes 
     FROM `ncbi-pathogen-detect.pdbrowser.microbigge` 
-    WHERE subtype != 'POINT'
+    WHERE subtype != 'AMR'
     GROUP BY contig_acc
     ORDER BY num_genes DESC
     LIMIT 10
