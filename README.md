@@ -43,7 +43,7 @@ FROM `ncbi-pathogen-detect.pdbrowser.microbigge` mb
 JOIN (
     SELECT contig_acc, COUNT(*) num_genes, COUNT(DISTINCT(element_symbol)) num_unique_genes 
     FROM `ncbi-pathogen-detect.pdbrowser.microbigge` 
-    WHERE subtype != 'AMR'
+    WHERE subtype = 'AMR'
     GROUP BY contig_acc
     ORDER BY num_genes DESC
     LIMIT 10
