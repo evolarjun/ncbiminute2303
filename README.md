@@ -26,7 +26,7 @@ WHERE biosample_acc = 'SAMN21357979'
 ### Find the really bad contigs with the most AMR genes
 ```sql
 -- Find the contigs with the most AMR genes
-    SELECT contig_acc, COUNT(*) num_genes, COUNT(COUNT(element_symbol)) num_unique_genes 
+    SELECT contig_acc, COUNT(*) num_genes, COUNT(DISTINCT(element_symbol)) num_unique_genes 
     FROM `ncbi-pathogen-detect.pdbrowser.microbigge` 
     WHERE subtype = 'AMR'
     GROUP BY contig_acc
