@@ -59,7 +59,7 @@ Here we filter based on one of the complex fields (`AST_phenotypes`)
 SELECT target_acc
 FROM `ncbi-pathogen-detect.pdbrowser.isolates` isolates
 WHERE
-(SELECT COUNT(1)
+(SELECT COUNT(*)
   FROM UNNEST(isolates.AST_phenotypes)
   WHERE antibiotic LIKE '%penem' AND phenotype = 'resistant'
 ) >= 1
