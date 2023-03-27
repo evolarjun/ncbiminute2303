@@ -21,7 +21,7 @@ WHERE isolation_source LIKE '%enoki%'
 ### Get info about a given isolate
 ```sql
 -- Get info about a given isolate
-SELECT taxgroup_name, isolate_identifiers, serovar, serotype, erd_group, computed_types
+SELECT taxgroup_name, isolate_identifiers, erd_group, isolation_source
 FROM `ncbi-pathogen-detect.pdbrowser.isolates`
 WHERE biosample_acc = 'SAMN21357979'
 ```
