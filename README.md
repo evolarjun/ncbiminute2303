@@ -41,7 +41,7 @@ WHERE biosample_acc = 'SAMN21357979'
 Looks like there were maybe some errors 
 ```sql
 -- What are the genes on the contigs with the most AMR genes
-SELECT mb.contig_acc, mb.element_symbol, mb.element_name, mb.subclass, top.num_unique_genes, top.num_genes
+SELECT mb.contig_acc, mb.start_on_contig, mb.element_symbol, mb.element_name, mb.subclass, top.num_unique_genes, top.num_genes
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge` mb
 JOIN (
     SELECT contig_acc, COUNT(*) num_genes, COUNT(DISTINCT(element_symbol)) num_unique_genes 
