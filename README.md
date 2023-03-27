@@ -60,7 +60,7 @@ Here we filter based on one of the complex fields (`AST_phenotypes`)
 ```sql
 --- Find all the isolates tested resistant to carbapenems
 SELECT target_acc, AST_phenotypes
-FROM `ncbi-pathogen-detect.pdbrowser.isolates`
+FROM `ncbi-pathogen-detect.pdbrowser.isolates` isolates
 WHERE
 (SELECT COUNT(*)
   FROM UNNEST(isolates.AST_phenotypes)
