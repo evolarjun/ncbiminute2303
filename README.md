@@ -64,7 +64,7 @@ WHERE
   WHERE antibiotic LIKE '%penem' AND phenotype = 'resistant'
 ) >= 1
 ```
-
+ 
 ### Bonus, won't explain in detail, find all the isolates tested resistant to carbapenems without a known carbapenem resistance gene or point mutation
 ```sql
 --- find all the isolates tested resistant to carbapenems without a known 
