@@ -3,6 +3,8 @@ ncbiminute2303
 =================
 
 Resources for NCBI Minute
+Log into https://console.cloud.google.com with username asmworkshoptest
+Tee up https://www.ncbi.nlm.nih.gov/pathogens/
 
 Example queries used in talk
 =============================
