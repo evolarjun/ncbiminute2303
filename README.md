@@ -12,7 +12,7 @@ Example queries used in talk
 
 ### Count the isolates from enoki mushrooms
 ```sql
--- How many isolates were isolated from "enoki"?
+-- How many assemblies were from bacteria isolated from "enoki"?
 SELECT COUNT(*)
 FROM `ncbi-pathogen-detect.pdbrowser.isolates`
 WHERE isolation_source LIKE '%enoki%'
@@ -41,7 +41,7 @@ WHERE biosample_acc = 'SAMN21357979'
 Looks like there were maybe some errors 
 ```sql
 -- What are the genes on the contigs with the most AMR genes
-SELECT mb.contig_acc, mb.start_on_contig, mb.element_symbol, mb.element_name, mb.subclass, top.num_unique_genes, top.num_genes
+SELECT mb.contig_acc, mb.start_on_contig, mb.element_symbol, mb.element_name, mb.subclass, top10.num_unique_genes, top10.num_genes
 FROM `ncbi-pathogen-detect.pdbrowser.microbigge` mb
 JOIN (
     SELECT contig_acc, COUNT(*) num_genes, COUNT(DISTINCT(element_symbol)) num_unique_genes 
@@ -50,8 +50,8 @@ JOIN (
     GROUP BY contig_acc
     ORDER BY num_genes DESC
     LIMIT 10
-  ) top 
-ON top.contig_acc = mb.contig_acc
+  ) top10 
+ON top10.contig_acc = mb.contig_acc
 ORDER BY num_genes DESC, start_on_contig
 ```
 
